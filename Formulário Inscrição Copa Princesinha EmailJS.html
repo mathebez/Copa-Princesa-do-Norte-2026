@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscrição - Copa Princesinha do Norte 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ===== ESTILOS GERAIS ===== */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== FUNDO DINÂMICO COM IMAGEM DE OKINAWA ===== */
+        .bg-okinawa {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('https://images.unsplash.com/photo-1656653121475-e33829581294?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            animation: zoomParallax 20s ease-in-out infinite alternate;
+        }
+
+        .bg-okinawa::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* overlay escuro para legibilidade */
+        }
+
+        @keyframes zoomParallax {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* ===== WRAPPER DO FORMULÁRIO ===== */
+        .form-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            padding: 2rem;
+        }
+
+        /* ===== CABEÇALHO VERMELHO COM ARCO ===== */
+        .header-red {
+            background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+            border-radius: 1.5rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 40px rgba(185, 28, 28, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .header-red::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .header-red h1 {
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+        .header-red .subtitle {
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .arco-icon {
+            font-size: 4rem;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CAMPOS ===== */
+        .input-focus {
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-focus:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+            outline: none;
+        }
+
+        .custom-checkbox,
+        .custom-radio {
+            appearance: none;
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.25rem;
+            background: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .custom-checkbox:checked {
+            background-color: #dc2626;
+            border-color: #dc2626;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20 6L9 17l-5-5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-size: 0.9rem;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .custom-radio {
+            border-radius: 50%;
+        }
+        .custom-radio:checked {
+            background-color: #dc2626;
+            border-color: #dc2626;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='12' cy='12' r='6'/%3E%3C/svg%3E");
+            background-size: 0.6rem;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            transition: all 0.3s ease;
+        }
+        .btn-red:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.4);
+        }
+        .btn-red:active {
+            transform: scale(0.98);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #dc2626, #7f1d1d);
+            transition: width 0.4s ease;
+        }
+
+        .error-text {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .error-border {
+            border-color: #dc2626 !important;
+        }
+
+        .section-divider {
+            border: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fca5a5, transparent);
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 640px) {
+            .form-container {
+                padding: 1.25rem;
+            }
+            .header-red {
+                padding: 1.5rem 1rem;
+            }
+            .arco-icon {
+                font-size: 3rem;
+            }
+
+            .input-focus:focus {
+                border-color: #dc2626;
+                box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+                outline: none;
+            }
+            .btn-red {
+                background: linear-gradient(135deg, #dc2626, #991b1b);
+                transition: all 0.2s ease;
+            }
+            .btn-red:hover:not(:disabled) {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+            }
+            .progress-bar {
+                background: linear-gradient(90deg, #dc2626, #fbbf24);
+                transition: width 0.5s ease;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fundo dinâmico com imagem de Okinawa -->
+    <div class="bg-okinawa"></div>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ===== CONFIGURAÇÕES =====
+        const EMAILJS_SERVICE_ID = 'service_pokou2t';
+        const EMAILJS_TEMPLATE_ID = 'template_0t4fjho';
+        const EMAILJS_PUBLIC_KEY = 'cpJ8bRU6VdZ6h6p4Y';
+
+        const CLOUDINARY_CLOUD_NAME = 'mjcntcyt';
+        const CLOUDINARY_UPLOAD_PRESET = 'Copa Princesinha - Atletas';
+        // ==========================
+
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        // ===== COMPONENTE PRINCIPAL =====
+        const App = () => {
+            // Estados (inalterados)
+            const [formData, setFormData] = useState({
+                nome: '',
+                dataNascimento: '',
+                sexo: '',
+                documento: null,
+                email: '',
+                telefone: '',
+                responsavel: '',
+                telefoneResponsavel: '',
+                graduacao: '',
+                dojo: '',
+                professor: '',
+                tempoPratica: '',
+                altura: '',
+                peso: '',
+                modalidades: [],
+                idade: '',
+                categoriaIdade: '',
+                categoriaGraduacao: '',
+                necessidades: '',
+                descricaoNecessidades: '',
+                restricaoMedica: '',
+                medicamentos: '',
+                descricaoMedicamentos: '',
+                saude: false,
+                autorizacao: false,
+                imagem: false,
+                veracidade: false,
+                regulamento: false,
+                participouAnterior: '',
+                comprovante: null,
+                nomePagador: '',
+                cientePrazo: false,
+                cientePagamento: false,
+            });
+
+            const [errors, setErrors] = useState({});
+            const [submitting, setSubmitting] = useState(false);
+            const [submitSuccess, setSubmitSuccess] = useState(false);
+            const [submitError, setSubmitError] = useState(null);
+            const [uploadProgress, setUploadProgress] = useState(0);
+
+            const docRef = useRef(null);
+            const comprovanteRef = useRef(null);
+
+            const eventoData = new Date('2026-09-06');
+
+            // Cálculo de idade (inalterado)
+            useEffect(() => {
+                if (formData.dataNascimento) {
+                    const nasc = new Date(formData.dataNascimento);
+                    let idade = eventoData.getFullYear() - nasc.getFullYear();
+                    const mes = eventoData.getMonth() - nasc.getMonth();
+                    if (mes < 0 || (mes === 0 && eventoData.getDate() < nasc.getDate())) {
+                        idade--;
+                    }
+                    setFormData(prev => ({ ...prev, idade: idade.toString() }));
+                } else {
+                    setFormData(prev => ({ ...prev, idade: '' }));
+                }
+            }, [formData.dataNascimento]);
+
+            useEffect(() => {
+                const idade = parseInt(formData.idade);
+                let cat = '';
+                if (isNaN(idade)) cat = '';
+                else if (idade < 6) cat = 'Sub-6 (abaixo de 6 anos)';
+                else if (idade <= 9) cat = 'Sub-9 (7 a 9 anos)';
+                else if (idade <= 12) cat = 'Sub-12 (10 a 12 anos)';
+                else if (idade <= 15) cat = 'Sub-13/Cadete (13 a 15 anos)';
+                else if (idade <= 17) cat = 'Sub-17/Juvenil (16 a 17 anos)';
+                else if (idade <= 35) cat = 'Adulto (18 a 35 anos)';
+                else if (idade <= 51) cat = 'Master (36 a 51 anos)';
+                else cat = 'Veterano (acima de 51 anos)';
+                setFormData(prev => ({ ...prev, categoriaIdade: cat }));
+            }, [formData.idade]);
+
+            useEffect(() => {
+                const faixa = formData.graduacao;
+                let cat = '';
+                if (!faixa) cat = '';
+                else if (['Branca', 'Branca com Cinza', 'Cinza', 'Amarela'].includes(faixa))
+                    cat = 'Iniciante (Branca a Amarela)';
+                else if (['Laranja', 'Azul'].includes(faixa))
+                    cat = 'Intermediário (Laranja e Azul)';
+                else if (['Verde', 'Roxa', 'Marrom Juvenil (-18 anos)'].includes(faixa))
+                    cat = 'Avançado (Verde, Roxa e Marrom Juvenil -18)';
+                else if (['Marrom Adulto (+18 anos)', 'Preta'].includes(faixa))
+                    cat = 'Graduado (Marrom Adulto +18 e Preta)';
+                else cat = '';
+                setFormData(prev => ({ ...prev, categoriaGraduacao: cat }));
+            }, [formData.graduacao]);
+
+            const totalPrice = (() => {
+                const count = formData.modalidades.length;
+                if (count === 0) return 0;
+                if (count === 1) return 50;
+                if (count === 2) return 90;
+                return 120;
+            })();
+
+            // Upload Cloudinary (inalterado)
+            const uploadToCloudinary = async (file, presetName, cloudName) => {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', presetName);
+
+                const isPdf = file.type === 'application/pdf';
+                const resourceType = isPdf ? 'raw' : 'auto';
+                formData.append('resource_type', resourceType);
+
+                const url = isPdf
+                    ? `https://api.cloudinary.com/v1_1/${cloudName}/raw/upload`
+                    : `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if (data.secure_url) {
+                        return data.secure_url;
+                    } else {
+                        throw new Error('Upload falhou: ' + JSON.stringify(data));
+                    }
+                } catch (err) {
+                    console.error('Erro no upload para Cloudinary:', err);
+                    throw err;
+                }
+            };
+
+            // Handlers (inalterados)
+            const handleChange = (e) => {
+                const { name, value, type, checked } = e.target;
+                if (type === 'checkbox' && name === 'modalidades') {
+                    const modalidades = formData.modalidades;
+                    if (checked) {
+                        setFormData({ ...formData, modalidades: [...modalidades, value] });
+                    } else {
+                        setFormData({ ...formData, modalidades: modalidades.filter(m => m !== value) });
+                    }
+                } else if (type === 'checkbox') {
+                    setFormData({ ...formData, [name]: checked });
+                } else {
+                    setFormData({ ...formData, [name]: value });
+                }
+                if (errors[name]) {
+                    setErrors({ ...errors, [name]: '' });
+                }
+            };
+
+            const handleFileChange = (e, fieldName) => {
+                const file = e.target.files[0];
+                if (file && file.size > 10 * 1024 * 1024) {
+                    alert('Arquivo muito grande. Máximo 10MB.');
+                    e.target.value = '';
+                    return;
+                }
+                setFormData({ ...formData, [fieldName]: file });
+                if (errors[fieldName]) {
+                    setErrors({ ...errors, [fieldName]: '' });
+                }
+            };
+
+            // Validação (inalterada)
+            const validate = () => {
+                const newErrors = {};
+                if (!formData.nome.trim()) newErrors.nome = 'Nome é obrigatório.';
+                if (!formData.dataNascimento) newErrors.dataNascimento = 'Data de nascimento é obrigatória.';
+                if (!formData.sexo) newErrors.sexo = 'Sexo é obrigatório.';
+                if (!formData.documento) newErrors.documento = 'Documento com foto é obrigatório.';
+                if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'E-mail válido é obrigatório.';
+                if (!formData.telefone.trim()) newErrors.telefone = 'Telefone é obrigatório.';
+                const idadeNum = parseInt(formData.idade);
+                if (!isNaN(idadeNum) && idadeNum < 18) {
+                    if (!formData.responsavel.trim()) newErrors.responsavel = 'Responsável legal é obrigatório para menores de 18 anos.';
+                    if (!formData.telefoneResponsavel.trim()) newErrors.telefoneResponsavel = 'Telefone do responsável é obrigatório.';
+                }
+                if (!formData.graduacao) newErrors.graduacao = 'Graduação é obrigatória.';
+                if (!formData.dojo.trim()) newErrors.dojo = 'Dojo é obrigatório.';
+                if (!formData.professor.trim()) newErrors.professor = 'Professor é obrigatório.';
+                if (!formData.tempoPratica) newErrors.tempoPratica = 'Tempo de prática é obrigatório.';
+                if (!formData.altura || isNaN(parseFloat(formData.altura)) || parseFloat(formData.altura) <= 0) newErrors.altura = 'Altura válida é obrigatória.';
+                if (!formData.peso || isNaN(parseFloat(formData.peso)) || parseFloat(formData.peso) <= 0) newErrors.peso = 'Peso válido é obrigatório.';
+                if (formData.modalidades.length === 0) newErrors.modalidades = 'Selecione pelo menos uma modalidade.';
+                if (!formData.categoriaIdade) newErrors.categoriaIdade = 'Categoria de idade não calculada.';
+                if (!formData.categoriaGraduacao) newErrors.categoriaGraduacao = 'Categoria de graduação não calculada.';
+                if (!formData.necessidades) newErrors.necessidades = 'Indique se possui condição especial.';
+                if (formData.necessidades === 'sim' && !formData.descricaoNecessidades.trim()) {
+                    newErrors.descricaoNecessidades = 'Descreva a condição.';
+                }
+                if (formData.medicamentos === 'sim' && !formData.descricaoMedicamentos.trim()) {
+                    newErrors.descricaoMedicamentos = 'Descreva os medicamentos.';
+                }
+                if (!formData.saude) newErrors.saude = 'Você deve declarar saúde e aptidão física.';
+                if (!formData.autorizacao) newErrors.autorizacao = 'Autorização de participação é obrigatória.';
+                if (!formData.imagem) newErrors.imagem = 'Autorização de uso de imagem é obrigatória.';
+                if (!formData.veracidade) newErrors.veracidade = 'Declaração de veracidade é obrigatória.';
+                if (!formData.regulamento) newErrors.regulamento = 'Concordância com o regulamento é obrigatória.';
+                if (!formData.participouAnterior) newErrors.participouAnterior = 'Indique se já participou de competições.';
+                if (totalPrice === 0) newErrors.modalidades = 'Selecione modalidades para calcular o valor.';
+                if (!formData.comprovante) newErrors.comprovante = 'Comprovante de pagamento é obrigatório.';
+                if (!formData.nomePagador.trim()) newErrors.nomePagador = 'Nome do pagador é obrigatório.';
+                if (!formData.cientePrazo) newErrors.cientePrazo = 'Você deve estar ciente do prazo.';
+                if (!formData.cientePagamento) newErrors.cientePagamento = 'Você deve estar ciente sobre pagamento.';
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+
+            // Envio (inalterado)
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!validate()) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+
+                setSubmitting(true);
+                setSubmitError(null);
+                setUploadProgress(0);
+
+                try {
+                    let documentoUrl = '';
+                    if (formData.documento) {
+                        setUploadProgress(20);
+                        documentoUrl = await uploadToCloudinary(
+                            formData.documento,
+                            CLOUDINARY_UPLOAD_PRESET,
+                            CLOUDINARY_CLOUD_NAME
+                        );
+                        setUploadProgress(50);
+                    }
+
+                    let comprovanteUrl = '';
+                    if (formData.comprovante) {
+                        comprovanteUrl = await uploadToCloudinary(
+                            formData.comprovante,
+                            CLOUDINARY_UPLOAD_PRESET,
+                            CLOUDINARY_CLOUD_NAME
+                        );
+                        setUploadProgress(80);
+                    }
+
+                    const templateParams = {
+                        nome: formData.nome,
+                        dataNascimento: formData.dataNascimento,
+                        idade: formData.idade,
+                        sexo: formData.sexo,
+                        email: formData.email,
+                        telefone: formData.telefone,
+                        responsavel: formData.responsavel || 'N/A',
+                        telefoneResponsavel: formData.telefoneResponsavel || 'N/A',
+                        graduacao: formData.graduacao,
+                        dojo: formData.dojo,
+                        professor: formData.professor,
+                        tempoPratica: formData.tempoPratica,
+                        altura: formData.altura,
+                        peso: formData.peso,
+                        modalidades: formData.modalidades.join(', '),
+                        categoriaIdade: formData.categoriaIdade,
+                        categoriaGraduacao: formData.categoriaGraduacao,
+                        necessidades: formData.necessidades === 'sim' ? 'Sim' : 'Não',
+                        descricaoNecessidades: formData.descricaoNecessidades || 'N/A',
+                        restricaoMedica: formData.restricaoMedica || 'N/A',
+                        medicamentos: formData.medicamentos === 'sim' ? 'Sim' : 'Não',
+                        descricaoMedicamentos: formData.descricaoMedicamentos || 'N/A',
+                        saude: formData.saude ? 'Sim' : 'Não',
+                        autorizacao: formData.autorizacao ? 'Sim' : 'Não',
+                        imagem: formData.imagem ? 'Sim' : 'Não',
+                        veracidade: formData.veracidade ? 'Sim' : 'Não',
+                        regulamento: formData.regulamento ? 'Sim' : 'Não',
+                        participouAnterior: formData.participouAnterior === 'sim' ? 'Sim' : 'Não',
+                        nomePagador: formData.nomePagador,
+                        cientePrazo: formData.cientePrazo ? 'Sim' : 'Não',
+                        cientePagamento: formData.cientePagamento ? 'Sim' : 'Não',
+                        valorTotal: `R$ ${totalPrice.toFixed(2)}`,
+                        documento_url: documentoUrl || 'Não enviado',
+                        comprovante_url: comprovanteUrl || 'Não enviado',
+                    };
+
+                    setUploadProgress(90);
+                    await emailjs.send(
+                        EMAILJS_SERVICE_ID,
+                        'template_0h3ik14', // ID do novo template
+                        {
+                            to_email: formData.email,   // destinatário (atleta)
+                            nome: formData.nome,
+                            modalidades: formData.modalidades.join(', '),
+                            categoriaIdade: formData.categoriaIdade,
+                            valorTotal: `R$ ${totalPrice.toFixed(2)}`,
+                            // inclua outros campos que desejar
+                        }
+                    );
+
+                    setUploadProgress(100);
+                    setSubmitSuccess(true);
+                } catch (err) {
+                    console.error('Erro:', err);
+                    setSubmitError('Erro ao enviar. Verifique o console para detalhes.');
+                } finally {
+                    setSubmitting(false);
+                }
+            };
+
+            // Tela de sucesso (inalterada)
+            if (submitSuccess) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4 relative z-10">
+                        <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-2xl w-full text-center">
+                            <div className="text-green-500 text-7xl mb-4">✅</div>
+                            <h2 className="text-3xl font-extrabold text-gray-800 mb-2">Inscrição enviada com sucesso!</h2>
+                            <p className="text-gray-600 mb-4 text-lg">
+                                Obrigado por se inscrever na <strong className="text-red-700">Copa Princesinha do Norte 2026</strong>.
+                                <br />Em breve você receberá um e-mail de confirmação.
+                            </p>
+                            <p className="text-sm text-gray-500">
+                                Dúvidas: <a href="mailto:kaizendojokaizen@gmail.com" className="text-red-600 underline font-medium">kaizendojokaizen@gmail.com</a>
+                            </p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="mt-6 bg-gradient-to-r from-red-600 to-red-800 hover:scale-105 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition transform"
+                            >
+                                <i className="fas fa-plus-circle mr-2"></i> Nova Inscrição
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            // ===== RENDERIZAÇÃO PRINCIPAL =====
+            return (
+                <div className="form-wrapper">
+                    <div className="form-container">
+                        {/* CABEÇALHO VERMELHO COM ARCO */}
+                        <div className="header-red text-center mb-10">
+                            <div className="flex flex-col items-center">
+                                <div className="arco-icon">
+                                    <i className="fas fa-archway"></i>
+                                </div>
+                                <p className="text-yellow-200 text-sm font-semibold uppercase tracking-wider">
+                                    Sobral - CE
+                                </p>
+                                <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-2">
+                                    Copa Princesinha do Norte 2026
+                                </h1>
+                                <p className="mt-2 text-red-100 text-lg font-medium subtitle">
+                                    Karatê Goju-Ryu · 06 de setembro de 2026
+                                </p>
+                                <p className="text-sm text-red-200 opacity-90">
+                                    Realização: Kaizen Dojo & FEKICE
+                                </p>
+                            </div>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-10">
+                            {/* ========== SEÇÃO 1 ========== */}
+                            <SectionCard icon="fa-user" title="Identificação do Atleta">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div className="md:col-span-2">
+                                        <Label required>Nome Completo do Atleta</Label>
+                                        <Input name="nome" value={formData.nome} onChange={handleChange} error={errors.nome} />
+                                        {errors.nome && <ErrorText>{errors.nome}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Data de Nascimento</Label>
+                                        <Input type="date" name="dataNascimento" value={formData.dataNascimento} onChange={handleChange} error={errors.dataNascimento} />
+                                        {errors.dataNascimento && <ErrorText>{errors.dataNascimento}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label>Idade no dia da competição</Label>
+                                        <input type="text" value={formData.idade} readOnly className="mt-1 block w-full rounded-lg border-gray-200 bg-gray-50 shadow-sm px-4 py-2.5 text-gray-600" />
+                                    </div>
+                                    <div>
+                                        <Label required>Sexo</Label>
+                                        <div className="mt-1 flex space-x-6">
+                                            <RadioOption name="sexo" value="Masculino" checked={formData.sexo === 'Masculino'} onChange={handleChange} label="Masculino" />
+                                            <RadioOption name="sexo" value="Feminino" checked={formData.sexo === 'Feminino'} onChange={handleChange} label="Feminino" />
+                                        </div>
+                                        {errors.sexo && <ErrorText>{errors.sexo}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Documento oficial com foto (RG, CNH ou Passaporte)</Label>
+                                        <FileInput ref={docRef} accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleFileChange(e, 'documento')} error={errors.documento} fileName={formData.documento?.name} />
+                                        {errors.documento && <ErrorText>{errors.documento}</ErrorText>}
+                                    </div>
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 2 ========== */}
+                            <SectionCard icon="fa-address-card" title="Dados de Contato">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <Label required>E-mail do Atleta ou Responsável</Label>
+                                        <Input type="email" name="email" value={formData.email} onChange={handleChange} error={errors.email} />
+                                        {errors.email && <ErrorText>{errors.email}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Telefone/WhatsApp (com DDD)</Label>
+                                        <Input type="tel" name="telefone" value={formData.telefone} onChange={handleChange} error={errors.telefone} />
+                                        {errors.telefone && <ErrorText>{errors.telefone}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label>Nome do Responsável Legal (se menor de 18 anos)</Label>
+                                        <Input name="responsavel" value={formData.responsavel} onChange={handleChange} error={errors.responsavel} />
+                                        {errors.responsavel && <ErrorText>{errors.responsavel}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label>Telefone do Responsável Legal</Label>
+                                        <Input type="tel" name="telefoneResponsavel" value={formData.telefoneResponsavel} onChange={handleChange} error={errors.telefoneResponsavel} />
+                                        {errors.telefoneResponsavel && <ErrorText>{errors.telefoneResponsavel}</ErrorText>}
+                                    </div>
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 3 ========== */}
+                            <SectionCard icon="fa-medal" title="Dados Técnicos">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <Label required>Graduação Atual (Faixa)</Label>
+                                        <Select name="graduacao" value={formData.graduacao} onChange={handleChange} error={errors.graduacao}>
+                                            <option value="">Selecione</option>
+                                            <option value="Branca">Branca</option>
+                                            <option value="Branca com Cinza">Branca com Cinza</option>
+                                            <option value="Cinza">Cinza</option>
+                                            <option value="Amarela">Amarela</option>
+                                            <option value="Laranja">Laranja</option>
+                                            <option value="Azul">Azul</option>
+                                            <option value="Verde">Verde</option>
+                                            <option value="Roxa">Roxa</option>
+                                            <option value="Marrom Juvenil (-18 anos)">Marrom Juvenil (-18 anos)</option>
+                                            <option value="Marrom Adulto (+18 anos)">Marrom Adulto (+18 anos)</option>
+                                            <option value="Preta">Preta</option>
+                                        </Select>
+                                        {errors.graduacao && <ErrorText>{errors.graduacao}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Dojo/Academia/Associação</Label>
+                                        <Input name="dojo" value={formData.dojo} onChange={handleChange} error={errors.dojo} />
+                                        {errors.dojo && <ErrorText>{errors.dojo}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Professor Responsável</Label>
+                                        <Input name="professor" value={formData.professor} onChange={handleChange} error={errors.professor} />
+                                        {errors.professor && <ErrorText>{errors.professor}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Tempo de Prática de Karatê</Label>
+                                        <Select name="tempoPratica" value={formData.tempoPratica} onChange={handleChange} error={errors.tempoPratica}>
+                                            <option value="">Selecione</option>
+                                            <option value="Menos de 6 meses">Menos de 6 meses</option>
+                                            <option value="6 meses a 1 ano">6 meses a 1 ano</option>
+                                            <option value="1 a 3 anos">1 a 3 anos</option>
+                                            <option value="3 a 5 anos">3 a 5 anos</option>
+                                            <option value="Mais de 5 anos">Mais de 5 anos</option>
+                                        </Select>
+                                        {errors.tempoPratica && <ErrorText>{errors.tempoPratica}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Altura (em metros - ex: 1,75)</Label>
+                                        <Input type="number" step="0.01" name="altura" value={formData.altura} onChange={handleChange} error={errors.altura} />
+                                        {errors.altura && <ErrorText>{errors.altura}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Peso Corporal (em kg - ex: 70)</Label>
+                                        <Input type="number" step="0.1" name="peso" value={formData.peso} onChange={handleChange} error={errors.peso} />
+                                        {errors.peso && <ErrorText>{errors.peso}</ErrorText>}
+                                    </div>
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 4 ========== */}
+                            <SectionCard icon="fa-flag" title="Modalidades e Categorias">
+                                <div className="space-y-4">
+                                    <div>
+                                        <Label required>Modalidades em que deseja competir</Label>
+                                        <div className="mt-2 space-x-4 flex flex-wrap gap-y-2">
+                                            <CheckboxOption name="modalidades" value="Kata" checked={formData.modalidades.includes('Kata')} onChange={handleChange} label="Kata" />
+                                            <CheckboxOption name="modalidades" value="Shiai Kumite" checked={formData.modalidades.includes('Shiai Kumite')} onChange={handleChange} label="Shiai Kumite" />
+                                            <CheckboxOption name="modalidades" value="Jiyū Kumite Especial" checked={formData.modalidades.includes('Jiyū Kumite Especial')} onChange={handleChange} label="Jiyū Kumite Especial (Somente maiores de 18 anos)" />
+                                        </div>
+                                        {errors.modalidades && <ErrorText>{errors.modalidades}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label>Idade em 06/09/2026 (calculada)</Label>
+                                        <input type="text" value={formData.idade} readOnly className="mt-1 block w-full rounded-lg border-gray-200 bg-gray-50 shadow-sm px-4 py-2.5 text-gray-600" />
+                                    </div>
+                                    <div>
+                                        <Label>Categoria de Idade</Label>
+                                        <input type="text" value={formData.categoriaIdade} readOnly className="mt-1 block w-full rounded-lg border-gray-200 bg-gray-50 shadow-sm px-4 py-2.5 text-gray-600" />
+                                        {errors.categoriaIdade && <ErrorText>{errors.categoriaIdade}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label>Categoria de Graduação</Label>
+                                        <input type="text" value={formData.categoriaGraduacao} readOnly className="mt-1 block w-full rounded-lg border-gray-200 bg-gray-50 shadow-sm px-4 py-2.5 text-gray-600" />
+                                        {errors.categoriaGraduacao && <ErrorText>{errors.categoriaGraduacao}</ErrorText>}
+                                    </div>
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 5 ========== */}
+                            <SectionCard icon="fa-heart" title="Necessidades Especiais e Condições Específicas">
+                                <div className="space-y-4">
+                                    <div>
+                                        <Label required>Possui alguma condição específica que demande atendimento diferenciado?</Label>
+                                        <div className="mt-1 flex space-x-6">
+                                            <RadioOption name="necessidades" value="sim" checked={formData.necessidades === 'sim'} onChange={handleChange} label="Sim" />
+                                            <RadioOption name="necessidades" value="nao" checked={formData.necessidades === 'nao'} onChange={handleChange} label="Não" />
+                                        </div>
+                                        {errors.necessidades && <ErrorText>{errors.necessidades}</ErrorText>}
+                                    </div>
+                                    {formData.necessidades === 'sim' && (
+                                        <div>
+                                            <Label required>Descreva a condição (ex: TEA, TDAH, Síndrome de Down, outras)</Label>
+                                            <Textarea name="descricaoNecessidades" value={formData.descricaoNecessidades} onChange={handleChange} error={errors.descricaoNecessidades} rows="3" />
+                                            {errors.descricaoNecessidades && <ErrorText>{errors.descricaoNecessidades}</ErrorText>}
+                                        </div>
+                                    )}
+                                    <div>
+                                        <Label>Possui alguma restrição médica que devemos conhecer?</Label>
+                                        <Textarea name="restricaoMedica" value={formData.restricaoMedica} onChange={handleChange} rows="2" />
+                                    </div>
+                                    <div>
+                                        <Label required>Faz uso de medicamentos contínuos?</Label>
+                                        <div className="mt-1 flex space-x-6">
+                                            <RadioOption name="medicamentos" value="sim" checked={formData.medicamentos === 'sim'} onChange={handleChange} label="Sim" />
+                                            <RadioOption name="medicamentos" value="nao" checked={formData.medicamentos === 'nao'} onChange={handleChange} label="Não" />
+                                        </div>
+                                    </div>
+                                    {formData.medicamentos === 'sim' && (
+                                        <div>
+                                            <Label required>Quais?</Label>
+                                            <Textarea name="descricaoMedicamentos" value={formData.descricaoMedicamentos} onChange={handleChange} error={errors.descricaoMedicamentos} rows="2" />
+                                            {errors.descricaoMedicamentos && <ErrorText>{errors.descricaoMedicamentos}</ErrorText>}
+                                        </div>
+                                    )}
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 6 ========== */}
+                            <SectionCard icon="fa-file-signature" title="Declarações e Autorizações">
+                                <div className="space-y-3">
+                                    {[
+                                        { name: 'saude', label: 'DECLARAÇÃO DE SAÚDE E APTIDÃO FÍSICA: Declaro, sob minha inteira responsabilidade, que o atleta encontra-se em plenas condições físicas, técnicas e psicológicas para participar.' },
+                                        { name: 'autorizacao', label: 'AUTORIZAÇÃO DE PARTICIPAÇÃO: Autorizo o atleta a participar, isentando a Organização, Kaizen Dojo e FEKICE de responsabilidade por acidentes decorrentes da prática esportiva.' },
+                                        { name: 'imagem', label: 'AUTORIZAÇÃO DE USO DE IMAGEM: Autorizo a utilização da imagem, voz e nome do atleta em fotografias, vídeos e demais registros para fins de divulgação institucional.' },
+                                        { name: 'veracidade', label: 'DECLARAÇÃO DE VERACIDADE: Declaro que todas as informações prestadas são verdadeiras e estou ciente que informações falsas poderão acarretar cancelamento da inscrição ou desclassificação.' },
+                                        { name: 'regulamento', label: 'CIÊNCIA E CONCORDÂNCIA COM O REGULAMENTO: Declaro ter lido e estar plenamente ciente de todas as normas, condições e disposições estabelecidas no Regulamento Oficial.' },
+                                    ].map(({ name, label }) => (
+                                        <div key={name} className="flex items-start">
+                                            <CheckboxSimple name={name} checked={formData[name]} onChange={handleChange} />
+                                            <label className="ml-2 text-sm text-gray-700 leading-relaxed">{label}</label>
+                                            {errors[name] && <ErrorText>{errors[name]}</ErrorText>}
+                                        </div>
+                                    ))}
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 7 ========== */}
+                            <SectionCard icon="fa-trophy" title="Informações Complementares">
+                                <div>
+                                    <Label required>Já participou de competições oficiais de Karatê anteriormente?</Label>
+                                    <div className="mt-1 flex space-x-6">
+                                        <RadioOption name="participouAnterior" value="sim" checked={formData.participouAnterior === 'sim'} onChange={handleChange} label="Sim" />
+                                        <RadioOption name="participouAnterior" value="nao" checked={formData.participouAnterior === 'nao'} onChange={handleChange} label="Não" />
+                                    </div>
+                                    {errors.participouAnterior && <ErrorText>{errors.participouAnterior}</ErrorText>}
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 8 ========== */}
+                            <SectionCard icon="fa-credit-card" title="Pagamento">
+                                <div className="space-y-4">
+                                    <div>
+                                        <Label>VALOR TOTAL DA INSCRIÇÃO</Label>
+                                        <p className="mt-1 text-3xl font-bold text-red-700">R$ {totalPrice.toFixed(2)}</p>
+                                        <p className="text-xs text-gray-500">* 1 modalidade: R$50,00 | 2 modalidades: R$90,00 | 3 modalidades: R$120,00</p>
+                                        {errors.modalidades && <ErrorText>{errors.modalidades}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Comprovante de Pagamento (PIX)</Label>
+                                        <p className="text-sm text-gray-600 mb-1">Chave PIX: matheus_bezerra_dias_@jim.com · Titular: Matheus Bezerra Dias</p>
+                                        <FileInput ref={comprovanteRef} accept=".pdf,.jpg,.jpeg,.png" onChange={(e) => handleFileChange(e, 'comprovante')} error={errors.comprovante} fileName={formData.comprovante?.name} />
+                                        {errors.comprovante && <ErrorText>{errors.comprovante}</ErrorText>}
+                                    </div>
+                                    <div>
+                                        <Label required>Nome do Pagador</Label>
+                                        <Input name="nomePagador" value={formData.nomePagador} onChange={handleChange} error={errors.nomePagador} />
+                                        {errors.nomePagador && <ErrorText>{errors.nomePagador}</ErrorText>}
+                                    </div>
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== SEÇÃO 9 ========== */}
+                            <SectionCard icon="fa-check-circle" title="Aceite Final">
+                                <div className="space-y-3">
+                                    <div className="flex items-start">
+                                        <CheckboxSimple name="cientePrazo" checked={formData.cientePrazo} onChange={handleChange} />
+                                        <label className="ml-2 text-sm text-gray-700 leading-relaxed">
+                                            Declaro que estou ciente de que o prazo de inscrições se encerra em <strong>23 de agosto de 2026 às 23h59</strong>, e que não serão aceitas inscrições após esta data.
+                                        </label>
+                                        {errors.cientePrazo && <ErrorText>{errors.cientePrazo}</ErrorText>}
+                                    </div>
+                                    <div className="flex items-start">
+                                        <CheckboxSimple name="cientePagamento" checked={formData.cientePagamento} onChange={handleChange} />
+                                        <label className="ml-2 text-sm text-gray-700 leading-relaxed">
+                                            Estou ciente de que apenas inscrições com <strong>pagamento confirmado</strong> serão consideradas válidas.
+                                        </label>
+                                        {errors.cientePagamento && <ErrorText>{errors.cientePagamento}</ErrorText>}
+                                    </div>
+                                </div>
+                            </SectionCard>
+
+                            {/* ========== INFORMAÇÕES IMPORTANTES ========== */}
+                            <div className="bg-gradient-to-r from-red-50 to-pink-50 border-l-4 border-red-500 p-6 rounded-2xl shadow-sm">
+                                <h3 className="text-xl font-bold text-red-800 flex items-center">
+                                    <i className="fas fa-info-circle mr-2"></i> Informações Importantes
+                                </h3>
+                                <ul className="list-disc list-inside text-sm text-red-800 space-y-1 mt-2">
+                                    <li><strong>Prazo Final:</strong> 23 de agosto de 2026 às 23h59</li>
+                                    <li><strong>Data do Evento:</strong> 06 de setembro de 2026</li>
+                                    <li><strong>Horário:</strong> 8h00 (Café da Manhã) / 9h30 (Abertura e Competições)</li>
+                                    <li><strong>Local:</strong> Sobral - Ceará - Brasil</li>
+                                    <li><strong>Documentos obrigatórios:</strong> Documento oficial com foto (frente e verso), comprovante de pagamento, autorização do responsável (se menor)</li>
+                                    <li><strong>Equipamentos obrigatórios:</strong> Luvas de Kumite, protetor bucal, protetor corporal, caneleiras, protetores de peito do pé, capacete de proteção</li>
+                                    <li><strong>Premiações:</strong> 1º Lugar: Ouro, 2º: Prata, 3º: Bronze</li>
+                                </ul>
+                                <p className="mt-3 text-sm text-red-700">
+                                    <i className="fas fa-envelope mr-1"></i> Dúvidas: <a href="mailto:kaizendojokaizen@gmail.com" className="underline font-medium">kaizendojokaizen@gmail.com</a>
+                                </p>
+                            </div>
+
+                            {/* ========== BOTÃO ENVIAR ========== */}
+                            <div className="flex flex-col items-center">
+                                {submitting && (
+                                    <div className="w-full max-w-md mb-4">
+                                        <div className="bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                                            <div className="progress-bar h-2.5 rounded-full" style={{ width: `${uploadProgress}%` }}></div>
+                                        </div>
+                                        <p className="text-sm text-gray-600 mt-1 text-center">
+                                            <i className="fas fa-spinner fa-spin mr-1"></i> {uploadProgress}% - Enviando...
+                                        </p>
+                                    </div>
+                                )}
+                                <button
+                                    type="submit"
+                                    disabled={submitting}
+                                    className={`px-10 py-4 btn-red text-white font-bold text-lg rounded-xl shadow-lg transition transform ${submitting ? 'opacity-60 cursor-not-allowed' : ''}`}
+                                >
+                                    {submitting ? (
+                                        <><i className="fas fa-spinner fa-spin mr-2"></i> Enviando...</>
+                                    ) : (
+                                        <><i className="fas fa-paper-plane mr-2"></i> Enviar Inscrição</>
+                                    )}
+                                </button>
+                            </div>
+
+                            {submitError && (
+                                <div className="bg-red-50 border border-red-300 text-red-700 px-5 py-4 rounded-xl flex items-start">
+                                    <i className="fas fa-exclamation-triangle mt-0.5 mr-3 text-red-500"></i>
+                                    <span><strong>Erro!</strong> {submitError}</span>
+                                </div>
+                            )}
+
+                            <p className="text-center text-sm text-gray-500 mt-4">
+                                <i className="fas fa-lock mr-1"></i> Ao enviar, você concorda com os termos e condições. Você receberá uma confirmação por e-mail.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            );
+        };
+
+        // ===== COMPONENTES AUXILIARES (visuais) =====
+        const SectionCard = ({ icon, title, children }) => (
+            <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-gray-100">
+                <h2 className="text-2xl font-bold text-gray-800 mb-5 flex items-center border-b border-red-100 pb-3">
+                    <i className={`fas ${icon} text-red-600 mr-3 text-xl`}></i>
+                    {title}
+                </h2>
+                {children}
+            </div>
+        );
+
+        const Label = ({ children, required = false }) => (
+            <label className={`block text-sm font-medium text-gray-700 mb-1 ${required ? 'required' : ''}`}>
+                {children}
+            </label>
+        );
+
+        const Input = ({ type = 'text', name, value, onChange, error, ...rest }) => (
+            <input
+                type={type}
+                name={name}
+                value={value}
+                onChange={onChange}
+                className={`mt-1 block w-full rounded-lg border-gray-200 shadow-sm px-4 py-2.5 input-focus ${error ? 'error-border' : ''}`}
+                {...rest}
+            />
+        );
+
+        const Select = ({ name, value, onChange, error, children }) => (
+            <select
+                name={name}
+                value={value}
+                onChange={onChange}
+                className={`mt-1 block w-full rounded-lg border-gray-200 shadow-sm px-4 py-2.5 input-focus ${error ? 'error-border' : ''}`}
+            >
+                {children}
+            </select>
+        );
+
+        const Textarea = ({ name, value, onChange, error, rows = 3 }) => (
+            <textarea
+                name={name}
+                value={value}
+                onChange={onChange}
+                rows={rows}
+                className={`mt-1 block w-full rounded-lg border-gray-200 shadow-sm px-4 py-2.5 input-focus ${error ? 'error-border' : ''}`}
+            />
+        );
+
+        const FileInput = React.forwardRef(({ accept, onChange, error, fileName }, ref) => (
+            <div>
+                <input
+                    type="file"
+                    ref={ref}
+                    accept={accept}
+                    onChange={onChange}
+                    className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition ${error ? 'error-border' : ''}`}
+                />
+                {fileName && <p className="text-xs text-gray-500 mt-1"><i className="fas fa-file mr-1"></i> {fileName}</p>}
+            </div>
+        ));
+
+        const CheckboxOption = ({ name, value, checked, onChange, label }) => (
+            <label className="inline-flex items-center cursor-pointer">
+                <input
+                    type="checkbox"
+                    name={name}
+                    value={value}
+                    checked={checked}
+                    onChange={onChange}
+                    className="custom-checkbox"
+                />
+                <span className="ml-2 text-sm text-gray-700">{label}</span>
+            </label>
+        );
+
+        const RadioOption = ({ name, value, checked, onChange, label }) => (
+            <label className="inline-flex items-center cursor-pointer">
+                <input
+                    type="radio"
+                    name={name}
+                    value={value}
+                    checked={checked}
+                    onChange={onChange}
+                    className="custom-radio"
+                />
+                <span className="ml-2 text-sm text-gray-700">{label}</span>
+            </label>
+        );
+
+        const CheckboxSimple = ({ name, checked, onChange }) => (
+            <input
+                type="checkbox"
+                name={name}
+                checked={checked}
+                onChange={onChange}
+                className="custom-checkbox mt-0.5"
+            />
+        );
+
+        const ErrorText = ({ children }) => (
+            <p className="error-text"><i className="fas fa-exclamation-circle"></i> {children}</p>
+        );
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
